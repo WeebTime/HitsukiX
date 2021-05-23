@@ -146,6 +146,10 @@ STRINGS:
     conn_chat_id: "ID поточного підключеного чату: <code>{id}</code>"
     help_btn: "Натисніть на мене, щоб отримати допомогу!"
     help_txt: "Натисніть кнопку нижче для допомоги!"
+    github_err: "User not found. Make sure you entered valid username!"
+    paste_success: "<b>Pasted successfully!</b>\nNekobin URL: {}"
+    paste_fail: "Failed to reach Nekobin!"
+    paste_no_text: "You haven't supplied text to paste!"
     delmsg_filter_title: 'Видалити повідомлення'
     send_text: Будь-ласка, відправте у відповідь слово/речення!
     replymsg_filter_title: 'Відповісти на повідомлення'
@@ -171,6 +175,8 @@ STRINGS:
     btn_channel: "📡 Новини Софі"
     btn_group_help: "Click me for help!"
     back: Назад
+    help_for: "Help for <b>{mod_name}</b> module:\n"
+    help_for_a: "Help for {mod_name}."
     #/help
     help_header: "Хей! Загляньте у нашу Wiki для отримання допомоги"
     click_btn: Натисніть тут
@@ -469,8 +475,6 @@ STRINGS:
     info_username: "\nІм'я користувача: {username}"
     info_link: "\nПосилання на користувача: {user_link}"
     info_saw: "\nЯ бачила їх у <code>{num}</code> групах"
-    info_sw_ban: "\nThis user is banned in @SpamWatch!"
-    info_sw_ban_reason: "\nReason: <code>{sw_reason}</code>"
     info_fbanned: "\nЗаблокований в поточній Федерації: "
     info_admeme: "\nКористувач має права адміністратора в цьому чаті."
     upd_cache: "Оновлення кешу..."
@@ -693,7 +697,7 @@ STRINGS:
     sam_latest: "<b>Latest available firmware:</b>\n"
     sam_test: "<b>Latest test firmware:</b>\n"
     phh_tag: "<b>Tag:</b> <code>{tag}</code>\n"
-    phh_size: "<b>Size</b>: <code>{size} MB</code>\n\n"
+    phh_size: "<b>Size</b>: <code>{size}</code>\n\n"
     twrp_device: "  <b>Device:</b> {device}\n"
     twrp_udpated: "  <b>Updated:</b> <code>{date}</code>\n"
     twrp_size: "  <b>Size:</b> <code>{size}</code>\n"
@@ -712,11 +716,12 @@ STRINGS:
     of_changelog: "  <u><b>Changelog:</b></u>\n"
   anime:
     search_err: "Something went wrong, check your search and try again!"
+    unknown_search_err: "An error occurred in the search attempt! Try again later."
     search_get_err: "Sorry! No <b>{type}</b> with id <code>{id}</code> was found..."
     id: "\n<b>ID:</b> <code>{id}</code>\n"
     short_desc: "<b>Short description:</b> <i>{desc}[...]</i>"
     desc: "<b>Description:</b> <i>{desc}</i>"
-    char_desc: "<b>About:</b>\n<i>{desc}</i>"
+    char_desc: "<b>About:</b>\n{desc}"
     score: "<b>Score:</b> <code>{score}</code>\n"
     favorites: "<b>Favorite:</b> <code>{favs}</code>"
     status: "<b>Status:</b> <code>{status}</code>\n"
@@ -732,8 +737,12 @@ STRINGS:
     manga_start: "<b>Date:</b> <code>{date}</code>\n"
     manga_chapters: "<b>Chapters:</b> <code>{chapters}</code>\n"
     manga_volumes: "<b>Volumes:</b> <code>{vol}</code>\n"
-    search_kaizoku: "<b>Search results for</b> <code>{query}</code> <b>on</b> <code>AnimeKaizoku</code>:\n"
-    kaizoku_err: "<b>No result found for</b> <code>{query}</code> <b>on</b> <code>AnimeKaizoku</code>"
-    search_kayo: "<b>Search results for</b> <code>{query}</code> <b>on</b> <code>AnimeKayo</code>:\n"
-    kayo_err: "<b>No result found for</b> <code>{query}</code> <b>on</b> <code>AnimeKayo</code>"
-    all_results: "See all results"
+  afk:
+    is_afk: "{user} is AFK!\nReason: {reason}"
+    unafk: "{user} is not AFK anymore!"
+    afk_anon: "AFK mode cannot be used as an anonymous administrator."
+  direct_links:
+    cmd_example: "<b>Usage:</b> <code>/{cmd} (url)</code>"
+    no_link: "No links found!"
+    no_sf_link: "No SourceForge links found\n"
+    sf_link_error: "Something is wrong in this link! Check and try again..."

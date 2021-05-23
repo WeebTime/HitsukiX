@@ -1,5 +1,9 @@
+# Copyright (C) 2018 - 2020 MrYacha. All rights reserved. Source code available under the AGPL.
+# Copyright (C) 2019 Aiogram
+# Copyright (C) 2020 Jeepeo
+#
 # This file is part of Hitsuki (Telegram Bot)
-
+#
 # This program is free software: you can redistribute it and/or modify
 # it under the terms of the GNU Affero General Public License as
 # published by the Free Software Foundation, either version 3 of the
@@ -107,15 +111,16 @@ async def help_cmd_g(message, strings):
 
 
 @register(helpmenu_cb.filter(), f='cb', allow_kwargs=True)
-async def helpmenu_callback(query, callback_data=None, **kwargs):
+@get_strings_dec('pm_menu')
+async def helpmenu_callback(query, strings, callback_data=None, **kwargs):
     mod = callback_data['mod']
     if not mod in MOD_HELP:
         await query.answer()
         return
-    msg = f"Help for <b>{mod}</b> module:\n"
+    msg = strings["help_for"].format(mod_name=mod)
     msg += f"{MOD_HELP[mod]}"
     button = InlineKeyboardMarkup().add(
-        InlineKeyboardButton(text='⬅️ Back', callback_data='get_help'))
+        InlineKeyboardButton(text=strings['back'], callback_data='get_help'))
     with suppress(MessageNotModified):
         await query.message.edit_text(msg, disable_web_page_preview=True, reply_markup=button)
-        await query.answer('Help for ' + mod)
+        await query.answer(strings["help_for_a"].format(mod_name=mod))

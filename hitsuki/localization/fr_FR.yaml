@@ -147,6 +147,10 @@ STRINGS:
     conn_chat_id: "ID actuel du chat connecté : <code>{id}</code>"
     help_btn: "Cliquez pour obtenir de l'aide !"
     help_txt: "Cliquez sur le bouton ci-dessous pour obtenir de l'aide !"
+    github_err: "User not found. Make sure you entered valid username!"
+    paste_success: "<b>Pasted successfully!</b>\nNekobin URL: {}"
+    paste_fail: "Failed to reach Nekobin!"
+    paste_no_text: "You haven't supplied text to paste!"
     delmsg_filter_title: 'Supprimer le message'
     send_text: Veuillez envoyer le message de réponse !
     replymsg_filter_title: 'Répondre au message'
@@ -172,6 +176,8 @@ STRINGS:
     btn_channel: "📬 Hitsuki News"
     btn_group_help: "Click me for help!"
     back: Retour
+    help_for: "Help for <b>{mod_name}</b> module:\n"
+    help_for_a: "Help for {mod_name}."
     #/help
     help_header: "Hey! Je m'appelle <b>Hitsuki</b>. Je suis un robot de gestion de groupe, là pour vous aider à vous déplacer et à garder l'ordre dans vos groupes!\nJ'ai beaucoup de fonctionnalités pratiques, telles que le contrôle des inondations, un système d'alerte, un système de conservation de notes et même des réponses prédéterminées sur certains mots clés."
     click_btn: Cliquez ici
@@ -468,8 +474,6 @@ STRINGS:
     info_username: "\nNom d'utilisateur : {username}"
     info_link: "\nLien utilisateur : {user_link}"
     info_saw: "\nJe les ai vus dans <code>{num}</code> groupes"
-    info_sw_ban: "\nThis user is banned in @SpamWatch!"
-    info_sw_ban_reason: "\nReason: <code>{sw_reason}</code>"
     info_fbanned: "\nBanni dans la Fédération actuelle : "
     info_admeme: "\nL'utilisateur a des droits d'administration dans ce chat."
     upd_cache: "Mise à jour du cache en cours..."
@@ -692,7 +696,7 @@ STRINGS:
     sam_latest: "<b>Latest available firmware:</b>\n"
     sam_test: "<b>Latest test firmware:</b>\n"
     phh_tag: "<b>Tag:</b> <code>{tag}</code>\n"
-    phh_size: "<b>Size</b>: <code>{size} MB</code>\n\n"
+    phh_size: "<b>Size</b>: <code>{size}</code>\n\n"
     twrp_device: "  <b>Device:</b> {device}\n"
     twrp_udpated: "  <b>Updated:</b> <code>{date}</code>\n"
     twrp_size: "  <b>Size:</b> <code>{size}</code>\n"
@@ -711,11 +715,12 @@ STRINGS:
     of_changelog: "  <u><b>Changelog:</b></u>\n"
   anime:
     search_err: "Something went wrong, check your search and try again!"
+    unknown_search_err: "An error occurred in the search attempt! Try again later."
     search_get_err: "Sorry! No <b>{type}</b> with id <code>{id}</code> was found..."
     id: "\n<b>ID:</b> <code>{id}</code>\n"
     short_desc: "<b>Short description:</b> <i>{desc}[...]</i>"
     desc: "<b>Description:</b> <i>{desc}</i>"
-    char_desc: "<b>About:</b>\n<i>{desc}</i>"
+    char_desc: "<b>About:</b>\n{desc}"
     score: "<b>Score:</b> <code>{score}</code>\n"
     favorites: "<b>Favorite:</b> <code>{favs}</code>"
     status: "<b>Status:</b> <code>{status}</code>\n"
@@ -731,8 +736,12 @@ STRINGS:
     manga_start: "<b>Date:</b> <code>{date}</code>\n"
     manga_chapters: "<b>Chapters:</b> <code>{chapters}</code>\n"
     manga_volumes: "<b>Volumes:</b> <code>{vol}</code>\n"
-    search_kaizoku: "<b>Search results for</b> <code>{query}</code> <b>on</b> <code>AnimeKaizoku</code>:\n"
-    kaizoku_err: "<b>No result found for</b> <code>{query}</code> <b>on</b> <code>AnimeKaizoku</code>"
-    search_kayo: "<b>Search results for</b> <code>{query}</code> <b>on</b> <code>AnimeKayo</code>:\n"
-    kayo_err: "<b>No result found for</b> <code>{query}</code> <b>on</b> <code>AnimeKayo</code>"
-    all_results: "See all results"
+  afk:
+    is_afk: "{user} is AFK!\nReason: {reason}"
+    unafk: "{user} is not AFK anymore!"
+    afk_anon: "AFK mode cannot be used as an anonymous administrator."
+  direct_links:
+    cmd_example: "<b>Usage:</b> <code>/{cmd} (url)</code>"
+    no_link: "No links found!"
+    no_sf_link: "No SourceForge links found\n"
+    sf_link_error: "Something is wrong in this link! Check and try again..."

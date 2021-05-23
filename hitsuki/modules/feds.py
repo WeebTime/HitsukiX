@@ -1,5 +1,9 @@
+# Copyright (C) 2018 - 2020 MrYacha. All rights reserved. Source code available under the AGPL.
+# Copyright (C) 2019 Aiogram
+# Copyright (C) 2020 Jeepeo
+#
 # This file is part of Hitsuki (Telegram Bot)
-
+#
 # This program is free software: you can redistribute it and/or modify
 # it under the terms of the GNU Affero General Public License as
 # published by the Free Software Foundation, either version 3 of the
@@ -683,7 +687,7 @@ async def fed_ban_user(message, fed, user, reason, strings):
                 'origin_fed': fed['fed_id'],
                 'by': message.from_user.id
             }
-            for chat_id in s_fed['chats']:
+            for chat_id in s_fed.get('chats', []):
                 if not user:
                     continue
 

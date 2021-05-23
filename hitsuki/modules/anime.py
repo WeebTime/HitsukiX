@@ -1,5 +1,8 @@
+# Copyright (C) 2021 HitaloSama.
+# Copyright (C) 2019 Aiogram.
+#
 # This file is part of Hitsuki (Telegram Bot)
-
+#
 # This program is free software: you can redistribute it and/or modify
 # it under the terms of the GNU Affero General Public License as
 # published by the Free Software Foundation, either version 3 of the
@@ -13,23 +16,27 @@
 # You should have received a copy of the GNU Affero General Public License
 # along with this program.  If not, see <http://www.gnu.org/licenses/>.
 
-import time
 import html
-import bs4
+import re
+
 import anilist
+from aiogram.types import InlineKeyboardButton, InlineKeyboardMarkup
 from jikanpy import AioJikan
 
-from aiogram.types import InlineKeyboardButton, InlineKeyboardMarkup
 from hitsuki.decorator import register
+
 from .utils.disable import disableable_dec
-from .utils.message import get_args_str, need_args_dec
 from .utils.language import get_strings_dec
-from .utils.http import http
+from .utils.message import get_args_str, need_args_dec
 
 
 def t(milliseconds: int) -> str:
-    """Inputs time in milliseconds, to get beautified time,
-    as string"""
+    """
+    Inputs time in milliseconds, to get beautified time, as string.
+
+    Arguments:
+        `milliseconds`: time in milliseconds.
+    """
     seconds, milliseconds = divmod(int(milliseconds), 1000)
     minutes, seconds = divmod(seconds, 60)
     hours, minutes = divmod(minutes, 60)
@@ -244,16 +251,21 @@ async def anilist_character(message, strings):
         )
 
     if hasattr(character, "description"):
+        desc = character.description
+        desc = desc.replace("__", "")
+        desc = desc.replace("**", "")
+        desc = desc.replace("~", "")
+        desc = re.sub(re.compile(r"<.*?>"), "", desc)
         if len(character.description) > 700:
-            desc = strings["char_desc"].format(
-                desc=f"{character.description[0:500]}[...]"
-            )
+            desc = desc[0:500] + "[...]"
+            desc = strings["char_desc"].format(desc=desc)
         else:
-            desc = strings["char_desc"].format(desc=character.description)
+            desc = strings["char_desc"].format(desc=desc)
 
     text = f"<b>{character.name.full}</b> (<code>{character.name.native}</code>)"
     text += strings["id"].format(id=character.id)
-    text += strings["favorites"].format(favs=character.favorites)
+    if hasattr(character, "favorites"):
+        text += strings["favorites"].format(favs=character.favorites)
     if hasattr(character, "description"):
         text += f"\n\n{desc}"
 
@@ -291,71 +303,6 @@ async def upcoming(message):
     await message.reply(upcoming_message)
 
 
-async def site_search(message, strings, site: str):
-    args = message.text.split(" ", 1)
-    more_results = True
-    search_query = args[1]
-
-    if site == "kaizoku":
-        search_url = f"https://animekaizoku.com/?s={search_query}"
-        html_text = await http.get(search_url)
-        soup = bs4.BeautifulSoup(html_text.text, "html.parser")
-        search_result = soup.find_all("h2", {"class": "post-title"})
-
-        if search_result:
-            result = strings["search_kaizoku"].format(query=html.escape(search_query))
-            for entry in search_result:
-                post_link = entry.a["href"]
-                post_name = html.escape(entry.text)
-                result += f"• <a href='{post_link}'>{post_name}</a>\n"
-        else:
-            more_results = False
-            result = strings["kaizoku_err"].format(query=html.escape(search_query))
-
-    elif site == "kayo":
-        search_url = f"https://animekayo.com/?s={search_query}"
-        html_text = await http.get(search_url)
-        soup = bs4.BeautifulSoup(html_text.text, "html.parser")
-        search_result = soup.find_all("h2", {"class": "title"})
-
-        result = strings["search_kayo"].format(query=html.escape(search_query))
-        for entry in search_result:
-
-            if entry.text.strip() == "Nothing Found":
-                result = strings["kayo_err"].format(query=html.escape(search_query))
-                more_results = False
-                break
-
-            post_link = entry.a["href"]
-            post_name = html.escape(entry.text.strip())
-            result += f"• <a href='{post_link}'>{post_name}</a>\n"
-
-    buttons = InlineKeyboardMarkup().add(
-        InlineKeyboardButton(text=strings["all_results"], url=search_url)
-    )
-
-    if more_results:
-        await message.reply(result, reply_markup=buttons, disable_web_page_preview=True)
-    else:
-        await message.reply(result)
-
-
-@register(cmds="kaizoku")
-@need_args_dec()
-@disableable_dec("kaizoku")
-@get_strings_dec("anime")
-async def kaizoku(message, strings):
-    await site_search(message, strings, "kaizoku")
-
-
-@register(cmds="kayo")
-@need_args_dec()
-@disableable_dec("kayo")
-@get_strings_dec("anime")
-async def kayo(message, strings):
-    await site_search(message, strings, "kayo")
-
-
 __mod_name__ = "Anime"
 
 __help__ = """
@@ -366,7 +313,5 @@ Get information about anime, manga or anime characters.
 - /manga (manga): returns information about the manga.
 - /airing (anime): returns anime airing info.
 - /character (character): returns information about the character.
-- /kaizoku (anime): search an anime on animekaizoku.com
-- /kayo (anime): search an anime on animekayo.com
 - /upcoming: returns a list of new anime in the upcoming seasons.
 """

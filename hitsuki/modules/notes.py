@@ -1,5 +1,9 @@
+# Copyright (C) 2018 - 2020 MrYacha. All rights reserved. Source code available under the AGPL.
+# Copyright (C) 2019 Aiogram
+# Copyright (C) 2020 Jeepeo
+#
 # This file is part of Hitsuki (Telegram Bot)
-
+#
 # This program is free software: you can redistribute it and/or modify
 # it under the terms of the GNU Affero General Public License as
 # published by the Free Software Foundation, either version 3 of the
@@ -320,7 +324,7 @@ async def search_in_note(message, chat, strings):
     return await message.reply(text)
 
 
-@register(cmds=['clear', 'delnote'])
+@register(cmds=['clear', 'delnote'], user_admin=True)
 @chat_connection(admin=True)
 @need_args_dec()
 @get_strings_dec('notes')
@@ -360,7 +364,7 @@ async def clear_note(message, chat, strings):
         await message.reply(strings['note_removed'].format(note_name=note_name, chat_name=chat['chat_title']))
 
 
-@register(cmds='clearall')
+@register(cmds='clearall', user_admin=True)
 @chat_connection(admin=True)
 @get_strings_dec('notes')
 async def clear_all_notes(message, chat, strings):

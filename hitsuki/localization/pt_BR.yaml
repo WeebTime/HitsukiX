@@ -146,6 +146,10 @@ STRINGS:
     conn_chat_id: "ID do atual grupo conectado no momento: <code>{id}</code>"
     help_btn: "Clique em mim para obter ajuda!"
     help_txt: "Clique no botão abaixo para obter ajuda!"
+    github_err: "Usuário não encontrado. Verifique se digitou um nome de usuário válido!"
+    paste_success: "<b>Colado com sucesso!</b>\nURL Nekobin: {}"
+    paste_fail: "Falha ao alcançar Nekobin!"
+    paste_no_text: "Você não forneceu texto para colar!"
     delmsg_filter_title: 'Apagar a mensagem'
     send_text: Por favor, responda uma mensagem!
     replymsg_filter_title: 'Responda uma mensagem'
@@ -171,6 +175,8 @@ STRINGS:
     btn_channel: "📬 Notícias do Hitsuki"
     btn_group_help: "Clique aqui para obter ajuda!"
     back: Voltar
+    help_for: "Ajuda para o módulo <b>{mod_name}</b>:\n"
+    help_for_a: "Ajuda para {mod_name}."
     #/help
     help_header: "Ei! Meu nome é <b>Hitsuki</b>. Sou um bot de gerenciamento de grupo, estou aqui para ajudá-lo a se locomover e manter a ordem em seus grupos!\nTenho muitos recursos úteis, como controle de flood, um sistema de avisos, um sistema de notas e até mesmo respostas predeterminadas em certas palavras-chave."
     click_btn: Clique aqui
@@ -467,8 +473,6 @@ STRINGS:
     info_username: "\nNome do usuário: {username}"
     info_link: "\nLink do usuário: {user_link}"
     info_saw: "\nEu os vi em <code>{num}</code> grupos"
-    info_sw_ban: "\nEste usuário está banido na @SpamWatch!"
-    info_sw_ban_reason: "\nMotivo: <code>{sw_reason}</code>"
     info_fbanned: "\nBanido na Federação atual: "
     info_admeme: "\nO usuário tem direitos de administrador neste chat."
     upd_cache: "Atualizando cache agora..."
@@ -691,7 +695,7 @@ STRINGS:
     sam_latest: "<b>Último firmware disponível:</b>\n"
     sam_test: "<b>Último firmware em teste:</b>\n"
     phh_tag: "<b>Tag:</b> <code>{tag}</code>\n"
-    phh_size: "<b>Tamanho</b>: <code>{size} MB</code>\n\n"
+    phh_size: "<b>Tamanho</b>: <code>{size}</code>\n\n"
     twrp_device: "  <b>Dispositivo:</b> {device}\n"
     twrp_udpated: "  <b>Atualizado:</b> <code>{date}</code>\n"
     twrp_size: "  <b>Tamanho:</b> <code>{size}</code>\n"
@@ -700,7 +704,7 @@ STRINGS:
     of_invalid_type: "'<b>{build_type}</b>' não é um tipo de compilação disponível, os tipos são apenas '<b>beta</b>' ou '<b>stable</b>'."
     of_stable_ex: "Para obter a versão mais recente do stable use <code>/ofox (codinome)</code>, por exemplo: <code>/ofox raphael</code>"
     of_beta_ex: "Para obter a última versão Beta use <code>/ofox (codinome) beta</code>, por exemplo: <code>/ofox raphael beta</code>"
-    of_no_releases: "Não há nenhuma release '<b>{build_type}</b>para <b>{device}</b>."
+    of_no_releases: "Não há nenhuma build '<b>{build_type}</b>' para <b>{device}</b>."
     of_device_page: "Página do dispositivo"
     of_header: "<u><b>OrangeFox Recovery <i>{build_type}</i> release</b></u>\n"
     of_device: "  <b>Dispositivo:</b> {fullname} (<code>{codename}</code>)\n"
@@ -710,11 +714,12 @@ STRINGS:
     of_changelog: "  <u><b>Mudanças:</b></u>\n"
   anime:
     search_err: "Algo deu errado, verifique sua pesquisa e tente novamente!"
+    unknown_search_err: "Um erro ocorreu na pesquisa! Tente novamente mais tarde."
     search_get_err: "Desculpe! Nenhum <b>{type}</b> com ID <code>{id}</code> foi encontrado..."
     id: "\n<b>ID:</b> <code>{id}</code>\n"
     short_desc: "<b>Descrição curta:</b> <i>{desc}[...]</i>"
     desc: "<b>Descrição:</b> <i>{desc}</i>"
-    char_desc: "<b>Sobre:</b>\n<i>{desc}</i>"
+    char_desc: "<b>Sobre:</b>\n{desc}"
     score: "<b>Pontuação:</b> <code>{score}</code>\n"
     favorites: "<b>Favoritos:</b> <code>{favs}</code>"
     status: "<b>Estado:</b> <code>{status}</code>\n"
@@ -730,8 +735,12 @@ STRINGS:
     manga_start: "<b>Data:</b> <code>{date}</code>\n"
     manga_chapters: "<b>Capítulos:</b> <code>{chapters}</code>\n"
     manga_volumes: "<b>Volumes:</b> <code>{vol}</code>\n"
-    search_kaizoku: "<b>Resultados da pesquisa para</b> <code>{query}</code> <b>em</b> <code>AnimeKaizoku</code>:\n"
-    kaizoku_err: "<b>Nenhum resultado encontrado para</b> <code>{query}</code> <b>em</b> <code>AnimeKaizoku</code>"
-    search_kayo: "<b>Resultados da pesquisa para</b> <code>{query}</code> <b>em</b> <code>AnimeKayo</code>:\n"
-    kayo_err: "<b>Nenhum resultado encontrado para</b> <code>{query}</code> <b>em</b> <code>AnimeKayo</code>"
-    all_results: "Ver todos os resultados"
+  afk:
+    is_afk: "{user} está AFK!\nMotivo: {reason}"
+    unafk: "{user} não está mais AFK!"
+    afk_anon: "Modo AFK não pode ser usado como um administrador anônimo."
+  direct_links:
+    cmd_example: "<b>Usage:</b> <code>/{cmd} (url)</code>"
+    no_link: "No links found!"
+    no_sf_link: "No SourceForge links found\n"
+    sf_link_error: "Something is wrong in this link! Check and try again..."

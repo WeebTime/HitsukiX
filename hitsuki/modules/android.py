@@ -1,5 +1,8 @@
+# Copyright (C) 2019 Aiogram.
+# Copyright (C) 2021 HitaloSama.
+#
 # This file is part of Hitsuki (Telegram Bot)
-
+#
 # This program is free software: you can redistribute it and/or modify
 # it under the terms of the GNU Affero General Public License as
 # published by the Free Software Foundation, either version 3 of the
@@ -14,18 +17,20 @@
 # along with this program.  If not, see <http://www.gnu.org/licenses/>.
 
 import time
-import rapidjson as json
-from bs4 import BeautifulSoup
-from hurry.filesize import size as get_size
 
+import rapidjson as json
 from aiogram.types import InlineKeyboardButton, InlineKeyboardMarkup
+from bs4 import BeautifulSoup
+
 from hitsuki import decorator
 from hitsuki.decorator import register
+
 from .utils.android import GetDevice
+from .utils.covert import convert_size
 from .utils.disable import disableable_dec
-from .utils.message import get_arg, get_cmd
-from .utils.language import get_strings_dec
 from .utils.http import http
+from .utils.language import get_strings_dec
+from .utils.message import get_arg, get_cmd
 
 # Commands /evo and /los ported from Haruka Aya
 # Commands /twrp, /samcheck and /samget ported from Samsung Geeks
@@ -49,11 +54,11 @@ async def los(message, strings):
     fetch = await http.get(f"https://download.lineageos.org/api/v1/{device}/nightly/*")
     if fetch.status_code == 200 and len(fetch.json()["response"]) != 0:
         usr = json.loads(fetch.content)
-        response = usr["response"][0]
+        response = usr["response"][-1]
         filename = response["filename"]
         url = response["url"]
         buildsize_a = response["size"]
-        buildsize_b = get_size(int(buildsize_a))
+        buildsize_b = convert_size(int(buildsize_a))
         version = response["version"]
 
         text = (strings["download"]).format(url=url, filename=filename)
@@ -108,7 +113,7 @@ async def evo(message, strings):
             maintainer = usr["maintainer"]
             maintainer_url = usr["telegram_username"]
             size_a = usr["size"]
-            size_b = get_size(int(size_a))
+            size_b = convert_size(int(size_a))
 
             text = (strings["download"]).format(url=url, filename=filename)
             text += (strings["build_size"]).format(size=size_b)
@@ -200,9 +205,9 @@ async def variants(message, strings):
 @disableable_dec("magisk")
 @get_strings_dec("android")
 async def magisk(message, strings):
-    url = "https://raw.githubusercontent.com/topjohnwu/magisk_files/"
+    url = "https://raw.githubusercontent.com/topjohnwu/magisk-files/"
     releases = strings["magisk"]
-    variant = ["master/stable", "master/beta", "canary/canary"]
+    variant = ["master/stable", "master/beta", "master/canary"]
     for variants in variant:
         fetch = await http.get(url + variants + ".json")
 
@@ -213,32 +218,13 @@ async def magisk(message, strings):
         data = json.loads(fetch.content)
         if variants == "master/stable":
             name = "<b>Stable</b>"
-            cc = 0
-            branch = "master"
         elif variants == "master/beta":
             name = "<b>Beta</b>"
-            cc = 0
-            branch = "master"
-        elif variants == "canary/canary":
+        elif variants == "master/canary":
             name = "<b>Canary</b>"
-            cc = 1
-            branch = "canary"
 
-        if variants == "canary/canary":
-            releases += f'{name}: <a href="{url}{branch}/{data["magisk"]["link"]}">v{data["magisk"]["version"]}</a> (<code>{data["magisk"]["versionCode"]}</code>) | '
-        else:
-            releases += f'{name}: <a href="{data["magisk"]["link"]}">v{data["magisk"]["version"]}</a> (<code>{data["magisk"]["versionCode"]}</code>) | '
-
-        if cc == 1:
-            releases += (
-                f'<a href="{url}{branch}/{data["uninstaller"]["link"]}">Uninstaller</a> | '
-                f'<a href="{url}{branch}/{data["magisk"]["note"]}">Changelog</a>\n'
-            )
-        else:
-            releases += (
-                f'<a href="{data["uninstaller"]["link"]}">Uninstaller</a>\n'
-                f'<a href="{data["magisk"]["note"]}">Changelog</a>\n'
-            )
+        releases += f'{name}: <a href="{data["magisk"]["link"]}">v{data["magisk"]["version"]}</a> (<code>{data["magisk"]["versionCode"]}</code>) | '
+        releases += f'<a href="{data["magisk"]["note"]}">Changelog</a>\n'
 
     await message.reply(releases, disable_web_page_preview=True)
 
@@ -288,9 +274,8 @@ async def phh_magisk(message, strings):
             url = usr["assets"][i]["browser_download_url"]
             tag = usr["tag_name"]
             size_bytes = usr["assets"][i]["size"]
-            size = float("{:.2f}".format((size_bytes / 1024) / 1024))
             text += strings["phh_tag"].format(tag=tag)
-            text += strings["phh_size"].format(size=size)
+            text += strings["phh_size"].format(size=convert_size(int(size_bytes)))
             btn = strings["dl_btn"]
             button = InlineKeyboardMarkup().add(InlineKeyboardButton(text=btn, url=url))
         except IndexError:
@@ -379,7 +364,7 @@ async def check(message, strings):
             text += f"• Android: <code>{os1}</code>\n"
         text += "\n"
     else:
-        text = strings["err_pub_sam"].format(model=model.upper(), csc=csc.upper())
+        text = strings["err_sam_pub"].format(model=model.upper(), csc=csc.upper())
     text += strings["sam_test"]
     if len(page2.find("latest").text.strip().split("/")) == 3:
         pda2, csc2, phone2 = page2.find("latest").text.strip().split("/")
@@ -444,7 +429,7 @@ async def orangefox(message, strings):
     if build_type == "":
         build_type = "stable"
 
-    if codename == "devices" or codename == "":
+    if codename in ("devices", ""):
         text = strings["of_available"].format(build_type=build_type)
         data = await http.get(
             API_HOST + f"devices/?release_type={build_type}&sort=device_name_asc"

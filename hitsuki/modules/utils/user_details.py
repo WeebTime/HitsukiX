@@ -1,5 +1,8 @@
+# Copyright (C) 2018 - 2020 MrYacha. All rights reserved. Source code available under the AGPL.
+# Copyright (C) 2019 Aiogram
+#
 # This file is part of Hitsuki (Telegram Bot)
-
+#
 # This program is free software: you can redistribute it and/or modify
 # it under the terms of the GNU Affero General Public License as
 # published by the Free Software Foundation, either version 3 of the
@@ -261,7 +264,7 @@ async def is_chat_creator(event: Union[Message, CallbackQuery], chat_id, user_id
 
 async def get_user_by_text(message, text: str):
     # Get all entities
-    entities = filter(lambda ent: ent['type'] == 'text_mention' or ent['type'] == 'mention', message.entities)
+    entities = filter(lambda ent: ent['type'] in ('text_mention', 'mention'), message.entities)
     for entity in entities:
         # If username matches entity's text
         if text in entity.get_text(message.text):

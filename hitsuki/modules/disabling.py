@@ -1,5 +1,8 @@
+# Copyright (C) 2018 - 2020 MrYacha. All rights reserved. Source code available under the AGPL.
+# Copyright (C) 2019 Aiogram
+#
 # This file is part of Hitsuki (Telegram Bot)
-
+#
 # This program is free software: you can redistribute it and/or modify
 # it under the terms of the GNU Affero General Public License as
 # published by the Free Software Foundation, either version 3 of the
@@ -55,7 +58,7 @@ async def list_disabled(message, chat, strings):
 @get_strings_dec("disable")
 async def disable_command(message, chat, strings):
     cmd = get_arg(message).lower()
-    if cmd[0] == '/' or cmd[0] == '!':
+    if cmd[0] in ('/', '!'):
         cmd = cmd[1:]
 
     # Check on commands aliases
@@ -91,7 +94,7 @@ async def disable_command(message, chat, strings):
 async def enable_command(message, chat, strings):
     chat_id = chat['chat_id']
     cmd = get_arg(message).lower()
-    if cmd[0] == '/' or cmd[0] == '!':
+    if cmd[0] in ('/', '!'):
         cmd = cmd[1:]
 
     # Check on commands aliases

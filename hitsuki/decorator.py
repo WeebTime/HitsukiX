@@ -1,5 +1,8 @@
+# Copyright (C) 2018 - 2020 MrYacha. All rights reserved. Source code available under the AGPL.
+# Copyright (C) 2019 Aiogram
+#
 # This file is part of Hitsuki (Telegram Bot)
-
+#
 # This program is free software: you can redistribute it and/or modify
 # it under the terms of the GNU Affero General Public License as
 # published by the Free Software Foundation, either version 3 of the
@@ -104,7 +107,7 @@ def register(*args, cmds=None, f=None, allow_edited=True, allow_kwargs=False, **
                 message.conf['cmds'] = cmds
 
             if allow_kwargs is False:
-                def_kwargs = dict()
+                def_kwargs = {}
 
             with configure_scope() as scope:
                 parsed_update = parse_update(dict(message))

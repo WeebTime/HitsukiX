@@ -1,5 +1,9 @@
+# Copyright (C) KassemSYR. All rights reserved.
+# Copyright (C) 2019 Aiogram.
+# Copyright (C) 2021 HitaloSama.
+#
 # This file is part of Hitsuki (Telegram Bot)
-
+#
 # This program is free software: you can redistribute it and/or modify
 # it under the terms of the GNU Affero General Public License as
 # published by the Free Software Foundation, either version 3 of the
@@ -17,7 +21,6 @@ import rapidjson as json
 from .http import http
 
 # This file is an adaptation / port from the Galaxy Helper Bot.
-# Copyright (C) KassemSYR. All rights reserved.
 
 
 class GetDevice:

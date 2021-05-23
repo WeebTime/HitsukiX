@@ -1,5 +1,8 @@
+# Copyright (C) 2018 - 2020 MrYacha. All rights reserved. Source code available under the AGPL.
+# Copyright (C) 2019 Aiogram
+#
 # This file is part of Hitsuki (Telegram Bot)
-
+#
 # This program is free software: you can redistribute it and/or modify
 # it under the terms of the GNU Affero General Public License as
 # published by the Free Software Foundation, either version 3 of the
@@ -24,7 +27,7 @@ from .utils.disable import disableable_dec
 from .utils.language import get_strings_dec
 from .utils.notes import get_parsed_note_list, send_note, t_unparse_note_item
 from .utils.user_details import is_user_admin
-from .utils.message import get_args_str, need_args_dec, get_cmd
+from .utils.message import get_args_str, need_args_dec
 from .utils.http import http
 
 
@@ -90,6 +93,36 @@ Variables are special words which will be replaced by actual info
 <code>{chatnick}</code>: Chat username
     """
     )
+
+
+@register(cmds='paste')
+@disableable_dec('paste')
+@get_strings_dec('misc')
+async def paste_neko(message, strings, **kwargs):
+    data = None
+
+    if 'reply_to_message' in message:
+        data = message.reply_to_message.text
+    else:
+        data = get_args_str(message)
+
+    if not data:
+        await message.reply(strings["paste_no_text"])
+        return
+
+    url = "https://nekobin.com/api/documents"
+    resp = await http.post(url, data={'content': data})
+
+    if resp.status_code == 201:
+        response = resp.json()
+        key = response['result']['key']
+        paste_url = f"https://nekobin.com/{key}"
+
+        text = (strings["paste_success"].format(paste_url))
+    else:
+        text = (strings["paste_fail"])
+
+    await message.reply(text, disable_web_page_preview=True)
 
 
 @decorator.register(cmds=['github', 'git'])
@@ -229,4 +262,6 @@ A module with some useful commands but without a specific category.
 - /cancel: Disables current state. Can help in cases if Hitsuki not responing on your message.
 - /id: get the current group id. If used by replying to a message, gets that user's id.
 - /info: get information about a user.
+- /afk (reason): Mark yourself as AFK. When marked as AFK, any mentions will be replied to with a message stating that you're not available!
+- /paste (text) or reply: Paste a text into <code>nekobin.com</code>.
 """
